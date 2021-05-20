@@ -25,7 +25,7 @@
         <!-- /header -->
 
         <!-- main -->
-        <main class="wrapper">
+        <main id="root" class="wrapper">
 
             <!-- chat-item -->
             <section class="chat-item">
@@ -46,48 +46,42 @@
 
                 <!-- main-chat-item -->
                 <main>
+
+                    <!-- notice -->
                     <section class="on-notice">
                         <i class="fas fa-bell-slash"></i>
                         <div>
                             <p>Ricevi notifiche di nuovi messaggi</p>
-                            <p>Attiva notifiche desktop</p>
+                            <p id="active-notice">Attiva notifiche desktop</p>
                         </div>
                     </section>
+                    <!-- /notice -->
+
+                    <!-- search-contact -->
                     <section class="search-contact">
                         <i class="fas fa-search"></i>
                         <input type="text" name="" id="" placeholder=" Cerca o inizia una nuova chat">
                     </section>
-                    <section class="chat-contact">
+                    <!-- /search-contact -->
+
+                    <!-- chat-list -->
+                    <section class="chat-list">
                         <div class="chat">
-                            <div class="contact-left">
-                                <img class="avatar" src="img/avatar_io.jpg" alt="avatar_io">
+                            <div v-for="(contact, index) in contacts" class="contact-left">
+                                <img class="avatar" :src="getImage(index)" 
+                                alt="avatar">
                                 <div>
-                                    <p>Nome Utente</p>
-                                    <p>Tutto fatto...</p>
+                                    <p>{{contact.name}}</p>
+                                    <p id="message">{{contact.messages}}</p>
                                 </div>
                             </div>
-                            <div class="contact-right">
-                                <i class="fas fa-circle-notch"></i>
-                                <i class="fas fa-comment-alt"></i>
-                                <i class="fas fa-ellipsis-v"></i>
-                            </div>
                         </div>
-                        <div class="chat">
-                            <div class="contact-left">
-                                <img class="avatar" src="img/avatar_io.jpg" alt="avatar_io">
-                                <div>
-                                    <p>Nome Utente</p>
-                                    <p>Tutto fatto...</p>
-                                </div>
-                            </div>
-                            <div class="contact-right">
-                                <i class="fas fa-circle-notch"></i>
-                                <i class="fas fa-comment-alt"></i>
-                                <i class="fas fa-ellipsis-v"></i>
-                            </div>
+                        <div class=>
+                            
                         </div>
-                        
                     </section>
+                    <!-- /chat-list -->
+
                 </main>
                 <!-- /main-chat-item -->
 
@@ -113,7 +107,14 @@
 
                 <!-- main-chat-box -->
                 <main>
-
+                    <div class="wrapper-chat">
+                        <div class="message-sticker send">
+                            <p>Hai portato il cane a spasso?</p>
+                        </div>
+                        <div class="message-sticker received">
+                            <p>Hai portato il cane a spasso?</p>
+                        </div>
+                    </div>
                 </main>
                 <!-- /main-chat-box -->  
 
