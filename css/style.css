@@ -59,6 +59,8 @@ header nav {
 .search-contact,
 .contact-right,
 .chat-list,
+.chat,
+.message-sticker,
 .chat-box footer
 {
     display: flex;
@@ -99,7 +101,8 @@ header nav {
 }
 
 #message,
-#active-notice {
+#active-notice,
+#date {
     color: grey;
 }
 
@@ -144,11 +147,22 @@ header nav {
     flex-direction: column;
 }
 
+.active {
+    background-color: #E9EBEB;
+}
+
+#date {
+    align-self:baseline;
+    font-size: 10px;
+}
+
 .contact-left {
     display: flex;
 }
 
 .chat {
+    padding: 5px;
+    justify-content: space-between;
     border-top: 1px solid rgb(196, 195, 195);
 }
 
@@ -192,13 +206,20 @@ header nav {
 }
 
 .message-sticker {
+    flex-direction: column;
     width: 250px;
     margin-top: 10px;
     padding: 10px;
     border-radius: 10px;
 }
 
-.send {
+.message-sticker #date {
+    display: flex;
+    align-self: flex-end;
+    padding-top: 10px;
+}
+
+.sent {
     align-self: flex-end;
     background-color: #D5F9BA;
 }

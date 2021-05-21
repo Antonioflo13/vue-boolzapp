@@ -86,12 +86,28 @@ const app = new Vue (
                         }
                     ],
                 },
-            ]
+            ],
+            activeIndex: 0,
+            newMessage: "",
         },
         methods: {
-            getImage: function(avatarIndex) {
-                return "img/avatar" + this.contacts[avatarIndex].avatar  + ".jpg"; 
+            getImage: function(contactIndex) {
+                return "img/avatar" + this.contacts[contactIndex].avatar  + ".jpg"; 
             },
-        }
+            getLastMessage: function(contact) {
+                const message = contact.messages[contact.messages.length -1];
+                return message;
+            },
+            getLastMessageDate: function(contact) {
+                return contact.messages[contact.messages.length -1];
+            },
+            thisChat: function(newIndex) {
+                return this.activeIndex = newIndex;
+            },
+            addNewMessage: function () {
+                this.contacts[this.activeIndex].messages.push({text:this.newMessage, visible:true, status:'sent'});
+                this.newMessage = "";
+            },
+        },
     },
 );
