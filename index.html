@@ -6,7 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" href="https://img.icons8.com/color/452/whatsapp--v1.png">
         <title>Boolzapp</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Oxygen&family=Roboto:ital@1&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <link rel="stylesheet" href="css/style.css">
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 
@@ -60,15 +63,15 @@
                     <!-- search-contact -->
                     <section class="search-contact">
                         <i class="fas fa-search"></i>
-                        <input type="text" name="" id="" placeholder=" Cerca o inizia una nuova chat">
+                        <input type="text" name="" id="" @change="searchContact" v-model="search" placeholder=" Cerca o inizia una nuova chat">
                     </section>
                     <!-- /search-contact -->
 
                     <!-- chat-list -->
                     <section class="chat-list">
-                        <div class="chat" v-for="(contact, index) in contacts" :class="(index==activeIndex) ? 'active' : '' " @click="thisChat(index)">
+                        <div class="chat" v-for="(contact, index) in contacts" :class="{ 'active': index == activeIndex, 'visible': contact.visible == false }" @click="thisChat(index)">
                             <div class="contact-left">
-                                <img class="avatar" :src="getImage(index)" 
+                                <img class="avatar" :src="getImage(index)"
                                 alt="avatar">
                                 <div>
                                     <p>{{contact.name}}</p>
@@ -96,6 +99,7 @@
                     <div class="nav-left">
                         <img class="avatar" :src="getImage(activeIndex)" alt="avatar_io">
                         <p>{{contacts[activeIndex].name}}</p>
+                        <p></p>
                     </div>
                     <div class="nav-right">
                         <i class="fas fa-search"></i>
@@ -107,7 +111,7 @@
 
                 <!-- main-chat-box -->
                 <main>
-                    <div class="wrapper-chat" v-for="(message, index) in contacts[activeIndex].messages">
+                    <div id="message-chat" class="wrapper-chat" v-for="(message, index) in contacts[activeIndex].messages">
                         <div :class="(message.status=='sent') ? 'sent' : 'received' "  class="message-sticker">
                             <p>{{message.text}}</p>
                             <p id="date">{{message.date}}</p>
@@ -119,7 +123,7 @@
                 <!-- footer-chat-box -->
                 <footer>
                     <i class="far fa-smile"></i>
-                    <input type="text" name="" id="" v-model="newMessage" @keydown.enter="addNewMessage" placeholder=" Scrivi un messaggio">
+                    <input type="text" name="" id="" v-model="newMessage" @keydown.enter="addNewMessage" @keyup.enter="delay" placeholder=" Scrivi un messaggio">
                     <i class="fas fa-microphone"></i>
                 </footer>
                 <!-- /footer-chat-box -->

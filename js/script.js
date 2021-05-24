@@ -87,12 +87,46 @@ const app = new Vue (
                     ],
                 },
             ],
+            bootMessages: [
+                {
+                    date: "",
+                    text: "Non sei simpatico e non fai ridere nessuno",
+                    status: "received"
+                },
+                {
+                    date: "",
+                    text: "Non credo di aver capito",
+                    status: "received"
+                },
+                {
+                    date: "",
+                    text: "Ah ah ah",
+                    status: "received"
+                }, 
+                {
+                    date: "",
+                    text: "Eccoci, rientriamo",
+                    status: "received"
+                },
+                {
+                    date: "",
+                    text: "Proviamo",
+                    status: "received"
+                },
+                {
+                    date: "",
+                    text: "Stai giocando a Guitar Hero?",
+                    status: "received"
+                },
+            ],
             activeIndex: 0,
             newMessage: "",
+            loading:"",
+            search:""
         },
         methods: {
             getImage: function(contactIndex) {
-                return "img/avatar" + this.contacts[contactIndex].avatar  + ".jpg"; 
+                return "img/avatar" + this.contacts[contactIndex].avatar  + ".jpg" ; 
             },
             getLastMessage: function(contact) {
                 const message = contact.messages[contact.messages.length -1];
@@ -105,9 +139,56 @@ const app = new Vue (
                 return this.activeIndex = newIndex;
             },
             addNewMessage: function () {
-                this.contacts[this.activeIndex].messages.push({text:this.newMessage, visible:true, status:'sent'});
+                this.contacts[this.activeIndex].messages.push(
+                    { date: dayjs().format('DD/MM/YY HH:mm:ss'),
+                    text:this.newMessage, 
+                    status:'sent',
+                });
                 this.newMessage = "";
             },
+            getRandom: function(max, min) {
+                    return Math.floor((Math.random() * (max - min + 1)) + min); 
+                },
+            bootMessage: function () {
+                let x = this.contacts[this.activeIndex].messages.push(
+                    {date: dayjs().format('DD/MM/YY HH:mm:ss'),
+                    text:this.bootMessages[1].text, 
+                    status:'received',
+                });
+                return x;
+            },
+            delay: function() {
+                 let x = this
+                setTimeout(function(){ 
+                    x.bootMessage();
+                }, 1000);
+            },
+            searchContact: function () {
+                return this.contacts.map(contact => {
+                    if (contact.name.toLowerCase().includes(this.search.toLowerCase())){
+                        contact.visible= true;
+                    } else {
+                        contact.visible= false;
+                    }
+                    console.log(contact.visible);
+                    
+                });
+            }
         },
+        // computed: {
+        //     filteredList() {
+        //       return this.contacts.filter(contact => {
+        //           if () {
+
+        //               return contact.name.toLowerCase().includes(this.search.toLowerCase());
+        //           }
+        //       })
+        //     }
+        // }
+        // updated: function() {
+        //     const scroll = document.getElementById("message-chat");
+        //     const lastMessage = scroll[scroll.length -1];
+        //     lastMessage.scrollIntoView();
+        // }
     },
 );

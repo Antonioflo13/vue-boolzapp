@@ -16,10 +16,15 @@ i {
     border-radius: 50%;
 }
 
+/* dark-theme */
+.chat-item nav .black {
+    background-color: black;
+}
 /* body */
 body {
     position: relative;
     height: 100vh;
+    font-family: 'Oxygen', sans-serif;
     background-color: #DBDBD2;
 }
 
@@ -208,7 +213,7 @@ header nav {
 .message-sticker {
     flex-direction: column;
     width: 250px;
-    margin-top: 10px;
+    margin: 10px 10px;
     padding: 10px;
     border-radius: 10px;
 }
@@ -229,4 +234,7 @@ header nav {
     background-color: #FFFFFF;
 }
 
+.visible {
+    display: none;
+}
 
