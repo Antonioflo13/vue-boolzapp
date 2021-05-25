@@ -11,17 +11,20 @@ const app = new Vue (
                         {
                             date: '10/01/2020 15:30:55',
                             text: 'Hai portato a spasso il cane?',
-                            status: 'sent'
+                            status: 'sent',
+                            toggle: true
                         },
                         {
                             date: '10/01/2020 15:50:00',
                             text: 'Ricordati di dargli da mangiare',
-                            status: 'sent'
+                            status: 'sent',
+                            toggle: true
                         },
                         {
                             date: '10/01/2020 16:15:22',
                             text: 'Tutto fatto!',
-                            status: 'received'
+                            status: 'received',
+                            toggle: true
                         }
                     ],
                 },
@@ -33,17 +36,20 @@ const app = new Vue (
                         {
                             date: '20/03/2020 16:30:00',
                             text: 'Ciao come stai?',
-                            status: 'sent'
+                            status: 'sent',
+                            toggle: true
                         },
                         {
                             date: '20/03/2020 16:30:55',
                             text: 'Bene grazie! Stasera ci vediamo?',
-                            status: 'received'
+                            status: 'received',
+                            toggle: true
                         },
                         {
                             date: '20/03/2020 16:35:00',
                             text: 'Mi piacerebbe ma devo andare a fare la spesa.',
-                            status: 'sent'
+                            status: 'sent',
+                            toggle: true
                         }
                     ],
                 },     
@@ -89,40 +95,25 @@ const app = new Vue (
             ],
             bootMessages: [
                 {
-                    date: "",
-                    text: "Non sei simpatico e non fai ridere nessuno",
-                    status: "received"
+                    text: "come stai?",
                 },
                 {
-                    date: "",
                     text: "Non credo di aver capito",
-                    status: "received"
                 },
                 {
-                    date: "",
                     text: "Ah ah ah",
-                    status: "received"
                 }, 
                 {
-                    date: "",
-                    text: "Eccoci, rientriamo",
-                    status: "received"
+                    text: "Sei a lavoro?",
                 },
                 {
-                    date: "",
-                    text: "Proviamo",
-                    status: "received"
-                },
-                {
-                    date: "",
-                    text: "Stai giocando a Guitar Hero?",
-                    status: "received"
+                    text: "Cosa fai nel pomeriggio?",
                 },
             ],
             activeIndex: 0,
             newMessage: "",
-            loading:"",
-            search:""
+            writing: true,
+            search:"",
         },
         methods: {
             getImage: function(contactIndex) {
@@ -145,24 +136,36 @@ const app = new Vue (
                     status:'sent',
                 });
                 this.newMessage = "";
+                return true;
             },
-            getRandom: function(max, min) {
-                    return Math.floor((Math.random() * (max - min + 1)) + min); 
-                },
             bootMessage: function () {
+                const getRandom =  Math.floor((Math.random() * ((this.bootMessages.length -1)- 0 + 1)) + 0);
                 let x = this.contacts[this.activeIndex].messages.push(
                     {date: dayjs().format('DD/MM/YY HH:mm:ss'),
-                    text:this.bootMessages[1].text, 
+                    text:this.bootMessages[getRandom].text, 
                     status:'received',
                 });
                 return x;
             },
             delay: function() {
                  let x = this
+                 this.writing = false;
                 setTimeout(function(){ 
                     x.bootMessage();
+                    x.writing = true;
                 }, 1000);
             },
+           time: function() {
+               const oclock = dayjs().format('DD/MM/YY HH:mm:ss');
+               return oclock;
+            },
+            toggle_dropdown: function(index) {
+                if (this.contacts[this.activeIndex].messages[index].toggle == true) {
+                    this.contacts[this.activeIndex].messages[index].toggle = false;
+                } else {
+                    this.contacts[this.activeIndex].messages[index].toggle = true;
+                }
+            }, 
             searchContact: function () {
                 return this.contacts.map(contact => {
                     if (contact.name.toLowerCase().includes(this.search.toLowerCase())){
@@ -170,25 +173,17 @@ const app = new Vue (
                     } else {
                         contact.visible= false;
                     }
-                    console.log(contact.visible);
-                    
                 });
-            }
+            },
+            deleteMessages: function (index) {
+                this.contacts[this.activeIndex].messages.splice(index,1);
+            },
         },
-        // computed: {
-        //     filteredList() {
-        //       return this.contacts.filter(contact => {
-        //           if () {
-
-        //               return contact.name.toLowerCase().includes(this.search.toLowerCase());
-        //           }
-        //       })
-        //     }
-        // }
-        // updated: function() {
-        //     const scroll = document.getElementById("message-chat");
-        //     const lastMessage = scroll[scroll.length -1];
-        //     lastMessage.scrollIntoView();
-        // }
+        updated: function() {
+            const elmt = document.getElementsByClassName("wrapper-chat");
+            const lastMessage = elmt[elmt.length - 1];
+            lastMessage.scrollIntoView();
+        },
+        
     },
 );

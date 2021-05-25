@@ -63,7 +63,7 @@
                     <!-- search-contact -->
                     <section class="search-contact">
                         <i class="fas fa-search"></i>
-                        <input type="text" name="" id="" @change="searchContact" v-model="search" placeholder=" Cerca o inizia una nuova chat">
+                        <input type="text" name="" id="" @keydown="searchContact" v-model="search" placeholder=" Cerca o inizia una nuova chat">
                     </section>
                     <!-- /search-contact -->
 
@@ -75,7 +75,8 @@
                                 alt="avatar">
                                 <div>
                                     <p>{{contact.name}}</p>
-                                    <p id="message">{{getLastMessage(contact).text}}</p>
+                                    <p v-show="index == activeIndex && writing==false">Sta scrivendo...</p>
+                                    <p v-show="writing==true" id="message">{{getLastMessage(contact).text}}</p>
                                 </div>
                             </div>
                             <div>
@@ -99,7 +100,8 @@
                     <div class="nav-left">
                         <img class="avatar" :src="getImage(activeIndex)" alt="avatar_io">
                         <p>{{contacts[activeIndex].name}}</p>
-                        <p></p>
+                        <p v-if="writing">Utimo accesso {{time()}}</p>
+                        <p v-else="">Sta scrivendo...</p>
                     </div>
                     <div class="nav-right">
                         <i class="fas fa-search"></i>
@@ -111,8 +113,12 @@
 
                 <!-- main-chat-box -->
                 <main>
-                    <div id="message-chat" class="wrapper-chat" v-for="(message, index) in contacts[activeIndex].messages">
+                    <div class="wrapper-chat" v-for="(message, index) in contacts[activeIndex].messages">
                         <div :class="(message.status=='sent') ? 'sent' : 'received' "  class="message-sticker">
+                            <p id="option-message"><i class="fas fa-chevron-down" @click="toggle_dropdown(index)"></i></p>
+                            <span :class="(message.toggle) ? 'visible' : '' " id="dropdown-option">
+                                <a href="#" @click="deleteMessages(index)">Elimina messaggio</a>
+                            </span>
                             <p>{{message.text}}</p>
                             <p id="date">{{message.date}}</p>
                         </div>

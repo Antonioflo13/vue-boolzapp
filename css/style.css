@@ -211,6 +211,7 @@ header nav {
 }
 
 .message-sticker {
+    position: relative;
     flex-direction: column;
     width: 250px;
     margin: 10px 10px;
@@ -222,6 +223,20 @@ header nav {
     display: flex;
     align-self: flex-end;
     padding-top: 10px;
+}
+
+#option-message {
+    display: flex;
+    align-self: flex-end;
+}
+
+#dropdown-option {
+    position: absolute;
+    right: 10px;
+    top: 26px;
+    width: 100px;
+    height: 100px;
+    background-color: beige;
 }
 
 .sent {
