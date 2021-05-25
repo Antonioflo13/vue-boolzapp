@@ -16,10 +16,6 @@ i {
     border-radius: 50%;
 }
 
-/* dark-theme */
-.chat-item nav .black {
-    background-color: black;
-}
 /* body */
 body {
     position: relative;
@@ -38,7 +34,6 @@ header nav {
 
 /* main */
 .wrapper {
-    display: flex;
     position: absolute;
     top: 10px;
     left: 50%;
@@ -54,10 +49,10 @@ header nav {
 
 .chat-item,
 .chat-box {
-    display: flex;
     flex-direction: column;
 }
 
+.wrapper,
 .nav-left,
 .nav-right,
 .on-notice,
@@ -66,7 +61,16 @@ header nav {
 .chat-list,
 .chat,
 .message-sticker,
-.chat-box footer
+.chat-box footer,
+#option-message,
+.chat-item nav, 
+.chat-box nav,
+.contact-left,
+.chat-item,
+.chat-box,
+.message-sticker #date,
+.wrapper-chat,
+.message-sticker #date
 {
     display: flex;
 }
@@ -74,7 +78,6 @@ header nav {
 /* chat-nav */
 .chat-item nav, 
 .chat-box nav {
-    display: flex;
     justify-content: space-between;
     width: 100%;
     padding: 10px;
@@ -93,6 +96,15 @@ header nav {
     align-items: center;
 }
 
+.chat {
+    cursor: pointer;
+}
+
+#info p:nth-of-type(2),
+#info p:nth-of-type(3){
+    font-size: 12px;
+}
+
 .nav-left i,
 .nav-right i {
     padding: 5px;
@@ -102,10 +114,11 @@ header nav {
 .nav-left img,
 .contact-left img,
 .on-notice i {
-    margin-right: 5px;
+    margin-right: 10px;
 }
 
-#message,
+#info p:nth-of-type(2),
+#info p:nth-of-type(3),
 #active-notice,
 #date {
     color: grey;
@@ -161,10 +174,6 @@ header nav {
     font-size: 10px;
 }
 
-.contact-left {
-    display: flex;
-}
-
 .chat {
     padding: 5px;
     justify-content: space-between;
@@ -188,7 +197,6 @@ header nav {
 }
 
 .wrapper-chat {
-    display: flex;
     flex-direction: column;
     width: 80%;
     margin: 0 auto;
@@ -220,23 +228,33 @@ header nav {
 }
 
 .message-sticker #date {
-    display: flex;
     align-self: flex-end;
     padding-top: 10px;
 }
 
 #option-message {
-    display: flex;
     align-self: flex-end;
 }
 
 #dropdown-option {
     position: absolute;
-    right: 10px;
+    right: -80px;
     top: 26px;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    margin-bottom: 10px;
     background-color: beige;
+}
+
+#dropdown-option a {
+    color: black;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+#dropdown-option ul {
+    list-style: none;
 }
 
 .sent {
@@ -248,6 +266,14 @@ header nav {
     align-self: flex-start;
     background-color: #FFFFFF;
 }
+
+/* dark-theme */
+.dark {
+    background-color: black;
+    transition: 0.5s;
+}
+
+
 
 .visible {
     display: none;

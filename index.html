@@ -34,13 +34,13 @@
             <section class="chat-item">
 
                 <!-- nav-chat-item -->
-                <nav>
+                <nav :class="{'dark': toggledark==true}">
                     <div class="nav-left">
                         <img class="avatar" src="img/avatar_2.jpg" alt="avatar_io">
                         <p>Antonio Flore</p>
                     </div>
                     <div class="nav-right">
-                        <i class="fas fa-circle-notch"></i>
+                        <i class="fas fa-circle-notch" @click="toggle_darktheme"></i>
                         <i class="fas fa-comment-alt"></i>
                         <i class="fas fa-ellipsis-v"></i>
                     </div>
@@ -48,7 +48,7 @@
                 <!-- /nav-chat-item -->
 
                 <!-- main-chat-item -->
-                <main>
+                <main :class="{'dark': toggledark==true}">
 
                     <!-- notice -->
                     <section class="on-notice">
@@ -63,20 +63,20 @@
                     <!-- search-contact -->
                     <section class="search-contact">
                         <i class="fas fa-search"></i>
-                        <input type="text" name="" id="" @keydown="searchContact" v-model="search" placeholder=" Cerca o inizia una nuova chat">
+                        <input type="text" name="" id="" @keydown="searchContact" v-model="search" :class="{'dark': toggledark==true}" placeholder=" Cerca o inizia una nuova chat">
                     </section>
                     <!-- /search-contact -->
 
                     <!-- chat-list -->
-                    <section class="chat-list">
-                        <div class="chat" v-for="(contact, index) in contacts" :class="{ 'active': index == activeIndex, 'visible': contact.visible == false }" @click="thisChat(index)">
+                    <section class="chat-list" :class="{'dark': toggledark==true}">
+                        <div class="chat" v-for="(contact, index) in contacts" :class="{ 'active': index == activeIndex, 'visible': contact.visible == false, 'dark': toggledark==true}" @click="thisChat(index)">
                             <div class="contact-left">
                                 <img class="avatar" :src="getImage(index)"
                                 alt="avatar">
-                                <div>
+                                <div id="info">
                                     <p>{{contact.name}}</p>
-                                    <p v-show="index == activeIndex && writing==false">Sta scrivendo...</p>
-                                    <p v-show="writing==true" id="message">{{getLastMessage(contact).text}}</p>
+                                    <p v-if="index == activeIndex && writing==true">Sta scrivendo...</p>
+                                    <p v-else>{{getLastMessage(contact).text}}</p>
                                 </div>
                             </div>
                             <div>
@@ -99,9 +99,11 @@
                 <nav>
                     <div class="nav-left">
                         <img class="avatar" :src="getImage(activeIndex)" alt="avatar_io">
-                        <p>{{contacts[activeIndex].name}}</p>
-                        <p v-if="writing">Utimo accesso {{time()}}</p>
-                        <p v-else="">Sta scrivendo...</p>
+                        <div id="info">
+                            <p>{{contacts[activeIndex].name}}</p>
+                            <p v-if="writing==false">Utimo accesso {{time()}}</p>
+                            <p v-else>Sta scrivendo...</p>
+                        </div>
                     </div>
                     <div class="nav-right">
                         <i class="fas fa-search"></i>
@@ -116,9 +118,12 @@
                     <div class="wrapper-chat" v-for="(message, index) in contacts[activeIndex].messages">
                         <div :class="(message.status=='sent') ? 'sent' : 'received' "  class="message-sticker">
                             <p id="option-message"><i class="fas fa-chevron-down" @click="toggle_dropdown(index)"></i></p>
-                            <span :class="(message.toggle) ? 'visible' : '' " id="dropdown-option">
-                                <a href="#" @click="deleteMessages(index)">Elimina messaggio</a>
-                            </span>
+                            <div :class="(message.toggle) ? '' : 'visible' " id="dropdown-option">
+                                <ul>
+                                    <li><a href="#">Info messaggio</a></li>
+                                    <li><a href="#" @click="deleteMessages(index)">Elimina messaggio</a></li>
+                                </ul>
+                            </div>
                             <p>{{message.text}}</p>
                             <p id="date">{{message.date}}</p>
                         </div>
