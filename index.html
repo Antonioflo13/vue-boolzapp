@@ -31,7 +31,7 @@
         <main id="root" class="wrapper">
 
             <!-- chat-item -->
-            <section class="chat-item">
+            <section class="chat-item" :class="{'dark_border_left': toggledark==true}">
 
                 <!-- nav-chat-item -->
                 <nav :class="{'dark': toggledark==true}">
@@ -48,7 +48,7 @@
                 <!-- /nav-chat-item -->
 
                 <!-- main-chat-item -->
-                <main :class="{'dark': toggledark==true}">
+                <main class="color_background" :class="{'dark': toggledark==true}">
 
                     <!-- notice -->
                     <section class="on-notice">
@@ -62,14 +62,14 @@
 
                     <!-- search-contact -->
                     <section class="search-contact">
-                        <i class="fas fa-search"></i>
-                        <input type="text" name="" id="" @keydown="searchContact" v-model="search" :class="{'dark': toggledark==true}" placeholder=" Cerca o inizia una nuova chat">
+                        <i class="fas fa-search search_contact_icon" :class="{'input_border_color_dark': toggledark==true}"></i>
+                        <input class="search_contact_input" :class="{'input_border_color_dark': toggledark==true}" type="text" name="" id="" @keydown="searchContact" v-model="search" :class="{'dark': toggledark==true}" placeholder=" Cerca o inizia una nuova chat">
                     </section>
                     <!-- /search-contact -->
 
                     <!-- chat-list -->
                     <section class="chat-list" :class="{'dark': toggledark==true}">
-                        <div class="chat" v-for="(contact, index) in contacts" :class="{ 'active': index == activeIndex, 'visible': contact.visible == false, 'dark': toggledark==true}" @click="thisChat(index)">
+                        <div class="chat" :class="{'dark_border_top': toggledark==true}" v-for="(contact, index) in contacts" :class="{ 'active': index == activeIndex, 'visible': contact.visible == false, 'dark': toggledark==true}" @click="thisChat(index)">
                             <div class="contact-left">
                                 <img class="avatar" :src="getImage(index)"
                                 alt="avatar">
@@ -96,7 +96,7 @@
             <section class="chat-box">
 
                 <!-- nav-chat-box -->
-                <nav>
+                <nav :class="{'dark': toggledark==true}">
                     <div class="nav-left">
                         <img class="avatar" :src="getImage(activeIndex)" alt="avatar_io">
                         <div id="info">
@@ -114,7 +114,7 @@
                 <!-- /nav-chat-box -->
 
                 <!-- main-chat-box -->
-                <main>
+                <main :class="{'dark_background_image': toggledark==true}" class="background-image">
                     <div class="wrapper-chat" v-for="(message, index) in contacts[activeIndex].messages">
                         <div :class="(message.status=='sent') ? 'sent' : 'received' "  class="message-sticker">
                             <p id="option-message"><i class="fas fa-chevron-down" @click="toggle_dropdown(index)"></i></p>
@@ -132,9 +132,9 @@
                 <!-- /main-chat-box -->  
 
                 <!-- footer-chat-box -->
-                <footer>
+                <footer :class="{'dark': toggledark==true}">
                     <i class="far fa-smile"></i>
-                    <input type="text" name="" id="" v-model="newMessage" @keydown.enter="addNewMessage" @keyup.enter="delay" placeholder=" Scrivi un messaggio">
+                    <input class="input_border_color" :class="{'input_border_color_dark': toggledark==true}" type="text" name="" id="" v-model="newMessage" @keydown.enter="addNewMessage" @keyup.enter="delay" placeholder=" Scrivi un messaggio">
                     <i class="fas fa-microphone"></i>
                 </footer>
                 <!-- /footer-chat-box -->

@@ -136,6 +136,7 @@ const app = new Vue (
                 return this.activeIndex = newIndex;
             },
             addNewMessage: function () {
+                if (this.newMessage.trim().length > 0) {
                 this.contacts[this.activeIndex].messages.push(
                     { date: dayjs().format('DD/MM/YY HH:mm:ss'),
                     text:this.newMessage, 
@@ -143,6 +144,7 @@ const app = new Vue (
                     toggle: false
                 });
                 this.newMessage = "";
+                }
             },
             bootMessage: function () {
                 const getRandom =  Math.floor((Math.random() * ((this.bootMessages.length -1)- 0 + 1)) + 0);
